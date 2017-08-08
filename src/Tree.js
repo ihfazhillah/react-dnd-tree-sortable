@@ -4,15 +4,18 @@ import Item from './Item';
 class Tree extends React.Component {
   render(){
     return (
-      <div style={{
-        position: 'relative',
-        minHeight: 10,
-        paddingTop: 10,
-        marginTop: -11,
-        marginLeft: '2em'
-      }}>
-      {this.props.items.map((item, i) => (
-        <Item key={i} id={item.id} parent={this.props.parent} item={item}/>
+      <div>
+        {this.props.parent &&
+            <div className='ny-card' data-ny-color="blue">
+             {
+            this.props.parent.title
+              }
+            </div>
+        }
+      {this.props.items && this.props.items.map((item, i) => (
+        <div style={{marginLeft: '2em', marginTop: 5}}>
+          <Tree key={i} id={item.id} parent={item} items={item.children}/>
+        </div>
       ))}
       </div>
     )
