@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 import Tree from './Tree';
+import {DragDropContext} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 const treeData = [
   {
@@ -96,4 +98,5 @@ class App extends Component {
     }
 }
 
+App = DragDropContext(HTML5Backend)(App)
 export default App;
