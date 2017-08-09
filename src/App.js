@@ -67,8 +67,13 @@ class App extends Component {
 
   renderItem = ({item}) => (
     <div className="ny-card" data-ny-color="purple">
+      <div className="ny-card-header">
+        {item.title}
+      </div>
       <div className="ny-card-content">
-    {item.title}</div>
+        <label htmlFor="label">Label</label>
+        <input type="text" id="label"/>
+      </div>
     </div>
   )
 
