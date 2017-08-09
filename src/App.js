@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 //import logo from './logo.svg';
 import './App.css';
-import Tree from './Tree';
+//import Tree from './Tree';
 import {DragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import _ from 'lodash'
+import {Nestable} from './react-dnd-nestable';
 
 const treeData = [
   {
@@ -52,6 +54,7 @@ const treeData = [
 class App extends Component {
   constructor(props){
     super(props)
+    this.updateItem = this.updateItem.bind(this)
 
     this.state = {
       dataTree: []
@@ -62,12 +65,24 @@ class App extends Component {
     this.setState({dataTree: treeData})
   }
 
+  renderItem = ({item}) => (
+    <div className="ny-card" data-ny-color="purple">
+      <div className="ny-card-content">
+    {item.title}</div>
+    </div>
+  )
+
+  updateItem(item){
+    this.setState({dataTree: item});
+  }
+
   render() {
     const {dataTree} = this.state;
 
     return (
       <div style={{
-        margin: 30
+        margin: 30,
+        listStyle: 'none'
       }}>
       <div className="col-xs-6">
         <div className="ny-flex--col">
@@ -77,7 +92,13 @@ class App extends Component {
             </div>
 
             <div className="ny-card-content">
-          <Tree parent={null} items={dataTree} />    
+              <Nestable
+                items={this.state.dataTree}
+                renderItem={this.renderItem}
+                onUpdate={this.updateItem}
+                childrenStyle={{marginLeft: '2rem', listStyle: 'none'}}
+              />
+
         </div>
       </div>
         </div>
@@ -88,7 +109,7 @@ class App extends Component {
         <div className="ny-card">
           <div className="ny-card-title">TreeData stringify</div>
           <div className="ny-card-content">
-            <pre className="ny-code"> {JSON.stringify(dataTree, null, 4)}</pre>
+            <pre>{JSON.stringify(this.state.dataTree, null, 2)}</pre>
           </div>
         </div>
       </div>
